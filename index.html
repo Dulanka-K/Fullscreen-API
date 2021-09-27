@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fullscreen API</title>
+    <style>
+        html,
+        body {
+            background-color: rgb(52, 187, 92);
+            margin: 0;
+            min-height: 100%;
+        }
+
+        .wrapper {
+            max-width: 100%;
+            text-align: center;
+        }
+
+        p {
+            background-color: rgb(251, 255, 7);
+            padding: 40px;
+            margin: 30px;
+            font-weight: 600;
+            font-family: Arial, Helvetica, sans-serif;
+            border: 5px solid white;
+        }
+
+        p:fullscreen {
+            display: flex;
+            align-items: center;
+            background-color: brown;
+            color: white;
+        }
+
+        p::backdrop {
+            display: none;
+        }
+
+        button {
+            margin-top: 5px;
+            background-color: antiquewhite;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .exitButton {
+            background-color: rgb(230, 140, 140);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+            anim id est laborum.
+        </p>
+        <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63371.815297074514!2d79.82118589335941!3d6.921837369631892!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae253d10f7a7003%3A0x320b2e4d32d3838d!2sColombo!5e0!3m2!1sen!2slk!4v1631946473215!5m2!1sen!2slk"
+            width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe><br>
+        <button class="fullscreenButton">Go Fullscreen</button>
+        <button class="mapButton">Fullscreen Map</button>
+        <button class="exitButton">Exit Fullscreen</button>
+        <button class="toggler">Toggle Fullscreen</button>
+    </div>
+    <script>
+        let fullscreenHandler = document.querySelector(".fullscreenButton");
+        let mapHandler = document.querySelector(".mapButton");
+        let exitButton = document.querySelector(".exitButton");
+        let toggler = document.querySelector(".toggler");
+
+        fullscreenHandler.addEventListener("click", () => {
+            document.documentElement.requestFullscreen();
+        });
+
+        mapHandler.addEventListener("click", () => {
+            document.querySelector("iframe").requestFullscreen();
+        });
+
+        exitButton.addEventListener("click", () => {
+            document.exitFullscreen();
+        });
+
+        fullscreenHandler.addEventListener("click", () => {
+            console.log("fullscreenEnabled: " + document.fullscreenEnabled)
+            console.log("fullscreenElement: " + document.fullscreenElement)
+        });
+
+        toggleFullscreen = () => {
+            if (document.fullscreenEnabled) {
+                if (document.fullscreenElement) {
+                    document.exitFullscreen();
+                } else {
+                    document.documentElement.requestFullscreen();
+                }
+            } else {
+                alert("Fullscreen is not supported!");
+            }
+        }
+
+        toggler.addEventListener("click", () => {
+            toggleFullscreen();
+        });
+
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") {
+                toggleFullscreen();
+            }
+        });
+
+        document.addEventListener("fullscreenchange", () => {
+            console.log("Fullscreen changed!");
+        });
+
+    //Uncomment below code to see :fullscreen styling in action
+    
+    // fullscreenHandler.addEventListener("click", () => {
+    //     document.querySelector("p").requestFullscreen();
+    // });
+    </script>
+</body>
+
+</html>
+
